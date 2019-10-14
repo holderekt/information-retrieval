@@ -2,9 +2,12 @@ package ranking;
 
 import utils.TextUtils;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
-public class Query {
+public class Query implements Iterable{
     private HashMap<String, Integer> list = new HashMap<String, Integer>();
+
 
     public Query(String query){
         TextUtils filter = TextUtils.getInstance();
@@ -27,4 +30,11 @@ public class Query {
     public String toString() {
         return list.toString();
     }
+
+    @Override
+    public Iterator iterator() {
+        return list.keySet().iterator();
+    }
+
+    public Set<String> getWords(){return list.keySet();}
 }

@@ -10,28 +10,14 @@ public class Main {
         Retriever ir = new Retriever();
         ir.addDocument("Emma Marrone", "document.txt");
         ir.addDocument("Hitler", "document2.txt");
+        ir.addDocument("Berlino", "document3.txt");
 
-        Document docemmma = new Document("Emma Marrone", "document.txt");
-        Document dochit = new Document("Hitler", "document2.txt");
-        Query ricerca = new Query("canzone lo' mario canzone'l");
-
-        ReverseIndex rvind = new ReverseIndex();
-        rvind.populateIndex(docemmma);
-        rvind.populateIndex(dochit);
-        //System.out.println(rvind.toString());
         System.out.println(ir);
+        Query query = new Query("un concerto a berlino");
 
-        RankingTool ranker = RankingTool.getInstance();
+        for(Document d : ir.getDocuments()){
+            System.out.println(d.getName() + " - Score: " + ir.tfidfSimilarity(query, d));
+        }
 
-        System.out.println(ranker.termFrequency("nella", docemmma, rvind));
-        System.out.println(ranker.termFrequency("nella", dochit, rvind));
-        System.out.println(ranker.documentFrequency("nella", rvind));
-        System.out.println(rvind.getDocumentNumber());
-        System.out.println(ranker.inverseDocumentFrequency(rvind.getDocumentNumber(), ranker.documentFrequency("song", rvind)));
-        System.out.println(ranker.tfidf("song", docemmma, rvind));
-        System.out.println(ranker.tfidf("song", dochit, rvind));
-        System.out.println(ranker.tfidf("nella", docemmma, rvind));
-        System.out.println(ranker.tfidf("nella", dochit, rvind));
-        System.out.println(ricerca);
     }
 }

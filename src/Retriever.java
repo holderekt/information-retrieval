@@ -2,6 +2,7 @@ import index.Document;
 import index.NotValidDocumentException;
 import index.ReverseIndex;
 import ranking.Query;
+import ranking.RankingTool;
 
 import java.util.Vector;
 
@@ -22,13 +23,23 @@ public class Retriever {
         documents.add(doc);
     }
 
-    public Vector<String> computeQuery(Query query){
-        return null;
+    public double tfidfSimilarity(Query query, Document document){
+
+        RankingTool rtool = RankingTool.getInstance();
+        double rank = 0.0;
+        for(String word : query.getWords()){
+            if(index.get(word) != null){
+                if(index.get(word).contains(document)){
+                    rank += rtool.tfidf(word, document, index);
+                }
+            }
+        }
+
+        return rank;
     }
 
-    public Vector<String> computeQuery(String querystring){
-        Query query = new Query(querystring);
-        return null;
+    public Vector<Document> getDocuments() {
+        return documents;
     }
 
     @Override
