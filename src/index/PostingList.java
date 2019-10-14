@@ -2,7 +2,7 @@ package index;
 
 import java.util.HashMap;
 
-class PostingList {
+public class PostingList {
     private HashMap<Document, Integer> list;
 
     PostingList(){
@@ -25,5 +25,17 @@ class PostingList {
         }
         result += "]";
         return  result;
+    }
+
+    public Integer get(Document document){
+        return list.get(document);
+    }
+
+    public int size(){
+        return list.keySet().size();
+    }
+
+    public boolean contains(Document document){
+        return list.keySet().contains(document);
     }
 }

@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class ReverseIndex implements Index{
     private HashMap<String, PostingList> dictionary = new HashMap<>();
-
-    public ReverseIndex(){}
+    private int documentNumber;
+    public ReverseIndex(){ documentNumber = 0;}
 
     @Override
     public void populateIndex(Document document) throws NotValidDocumentException{
@@ -30,6 +30,7 @@ public class ReverseIndex implements Index{
             dictionary.put(word, list);
         }
 
+        documentNumber = documentNumber + 1;
     }
 
     private HashMap<String, Integer> generateWordbag(String filename) throws NotValidDocumentException {
@@ -63,6 +64,14 @@ public class ReverseIndex implements Index{
         }
 
         return content;
+    }
+
+    public PostingList get(String word){
+        return dictionary.get(word);
+    }
+
+    public int getDocumentNumber(){
+        return documentNumber;
     }
 
     @Override
