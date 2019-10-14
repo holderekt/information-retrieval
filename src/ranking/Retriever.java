@@ -1,3 +1,5 @@
+package ranking;
+
 import index.Document;
 import index.NotValidDocumentException;
 import index.ReverseIndex;

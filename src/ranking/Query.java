@@ -36,5 +36,9 @@ public class Query implements Iterable{
         return list.keySet().iterator();
     }
 
+    public Integer get(String word){
+        return list.get(word);
+    }
+
     public Set<String> getWords(){return list.keySet();}
 }
