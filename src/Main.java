@@ -7,6 +7,10 @@ import ranking.RankingTool;
 public class Main {
 
     public static void main(String[] args) throws NotValidDocumentException {
+        Retriever ir = new Retriever();
+        ir.addDocument("Emma Marrone", "document.txt");
+        ir.addDocument("Hitler", "document2.txt");
+
         Document docemmma = new Document("Emma Marrone", "document.txt");
         Document dochit = new Document("Hitler", "document2.txt");
         Query ricerca = new Query("canzone lo' mario canzone'l");
@@ -14,7 +18,8 @@ public class Main {
         ReverseIndex rvind = new ReverseIndex();
         rvind.populateIndex(docemmma);
         rvind.populateIndex(dochit);
-        System.out.println(rvind.toString());
+        //System.out.println(rvind.toString());
+        System.out.println(ir);
 
         RankingTool ranker = RankingTool.getInstance();
 
