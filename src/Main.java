@@ -1,5 +1,4 @@
 import index.Document;
-import index.Index;
 import index.NotValidDocumentException;
 import index.ReverseIndex;
 import ranking.RankingTool;
@@ -21,6 +20,11 @@ public class Main {
         System.out.println(ranker.documentFrequency("nella", rvind));
         System.out.println(rvind.getDocumentNumber());
         System.out.println(ranker.inverseDocumentFrequency(rvind.getDocumentNumber(), ranker.documentFrequency("song", rvind)));
+        System.out.println(ranker.tfidf("song", docemmma, rvind));
+        System.out.println(ranker.tfidf("song", dochit, rvind));
+        System.out.println(ranker.tfidf("nella", docemmma, rvind));
+        System.out.println(ranker.tfidf("nella", dochit, rvind));
+
 
     }
 }

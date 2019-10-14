@@ -34,4 +34,12 @@ public class RankingTool {
         return Math.log(documentNumber / documentFrequency);
     }
 
+    public double tfidf(String word, Document document, ReverseIndex index){
+        double tf = termFrequency(word, document, index);
+        double df = documentFrequency(word, index);
+        double idf = inverseDocumentFrequency(index.getDocumentNumber(), df);
+
+        return tf * idf;
+    }
+
 }
