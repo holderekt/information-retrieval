@@ -1,6 +1,7 @@
 import index.Document;
 import index.NotValidDocumentException;
 import index.ReverseIndex;
+import ranking.Query;
 import ranking.RankingTool;
 
 public class Main {
@@ -8,6 +9,8 @@ public class Main {
     public static void main(String[] args) throws NotValidDocumentException {
         Document docemmma = new Document("Emma Marrone", "document.txt");
         Document dochit = new Document("Hitler", "document2.txt");
+        Query ricerca = new Query("canzone lo' mario canzone'l");
+
         ReverseIndex rvind = new ReverseIndex();
         rvind.populateIndex(docemmma);
         rvind.populateIndex(dochit);
@@ -24,7 +27,6 @@ public class Main {
         System.out.println(ranker.tfidf("song", dochit, rvind));
         System.out.println(ranker.tfidf("nella", docemmma, rvind));
         System.out.println(ranker.tfidf("nella", dochit, rvind));
-
-
+        System.out.println(ricerca);
     }
 }

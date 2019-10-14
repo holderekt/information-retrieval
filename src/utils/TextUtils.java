@@ -12,4 +12,8 @@ public class TextUtils {
     public String[] textFilter(String word){
         return word.replaceAll("[^a-zA-Z ]", " ").toLowerCase().split("\\s+");
     }
+
+    public boolean wordCheck(String word){
+        return word.length() > 1;
+    }
 }

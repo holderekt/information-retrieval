@@ -53,7 +53,7 @@ public class ReverseIndex implements Index{
         while(scanner.hasNext()){
             buffer = filter.textFilter(scanner.next());
             for(String word : buffer){
-                if(word.length() > 1){
+                if(filter.wordCheck(word)){
                     if(content.get(word) == null){
                         content.put(word, 1);
                     }else{
