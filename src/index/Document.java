@@ -1,12 +1,19 @@
 package index;
 
+import java.util.Set;
+
 public class Document {
     private String name;
     private String filename;
+    private Set<String> content;
 
     public Document(String name, String filename){
         this.name = name;
         this.filename = filename;
+    }
+
+    public void setContent(Set<String> content) {
+        this.content = content;
     }
 
     public String getName(){
@@ -21,4 +28,6 @@ public class Document {
         String result = this.name;
         return result;
     }
+
+    public Set<String> getWords(){return content;}
 }

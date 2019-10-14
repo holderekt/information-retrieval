@@ -14,10 +14,10 @@ public class Main {
         ir.addDocument("Videogiochi e Nazismo", "documento4.txt");
 
         System.out.println(ir);
-        Query query = new Query("un concerto a berlino su nazismo con hitler");
+        Query query = new Query("berlino");
 
         for(Document d : ir.getDocuments()){
-            System.out.println(d.getName() + " - Score: " + ir.tfidfSimilarity(query, d));
+            System.out.println(d.getName() + " - Score: " + ir.cosineSimilarity(query, d));
         }
 
     }

@@ -15,7 +15,7 @@ public class ReverseIndex implements Index{
     @Override
     public void populateIndex(Document document) throws NotValidDocumentException{
 
-        HashMap<String, Integer> wordbag = generateWordbag(document.getFilename());
+        HashMap<String, Integer> wordbag = generateWordbag(document);
         Set<String> words = wordbag.keySet();
         PostingList list;
 
@@ -33,10 +33,10 @@ public class ReverseIndex implements Index{
         documentNumber = documentNumber + 1;
     }
 
-    private HashMap<String, Integer> generateWordbag(String filename) throws NotValidDocumentException {
+    private HashMap<String, Integer> generateWordbag(Document document) throws NotValidDocumentException {
 
         TextUtils filter = TextUtils.getInstance();
-        File file = new File(filename);
+        File file = new File(document.getFilename());
         Scanner scanner;
 
         try{
@@ -62,7 +62,11 @@ public class ReverseIndex implements Index{
                 }
             }
         }
-
+        /*
+            TODO
+            SIDE EFFECT Non esplicito / Da risolvere
+         */
+        document.setContent(content.keySet());
         return content;
     }
 

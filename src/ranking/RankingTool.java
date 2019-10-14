@@ -3,6 +3,8 @@ import index.Document;
 import index.PostingList;
 import index.ReverseIndex;
 
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 
 public class RankingTool {
@@ -52,12 +54,30 @@ public class RankingTool {
         return tf * idf;
     }
 
+    public Vector<Double> tfidf(Set<String> word, Document document, ReverseIndex index){
+        Vector<Double> tfidfvector = new Vector<Double>();
+        for(String s : word){
+            tfidfvector.add(tfidf(s, document, index));
+        }
+
+        return tfidfvector;
+    }
+
     public double tfidf(String word, Query query, ReverseIndex index){
         double tf = termFrequency(word, query);
         double df = documentFrequency(word, index);
         double idf = inverseDocumentFrequency(index.getDocumentNumber(), df);
 
         return tf * idf;
+    }
+
+    public Vector<Double> tfidf(Set<String> word, Query query, ReverseIndex index){
+        Vector<Double> tfidfvector = new Vector<Double>();
+        for(String s : word){
+            tfidfvector.add(tfidf(s, query, index));
+        }
+
+        return tfidfvector;
     }
 
     public double vectorLength(Vector<Double> vector){
@@ -75,8 +95,27 @@ public class RankingTool {
         for(Double value : vector){
             normalVector.add(value / length);
         }
-        
+
         return normalVector;
+    }
+
+    public Vector<Double> vectorNormalize(Vector<Double> vector, double length){
+        Vector<Double> normalVector = new Vector<>();
+        for(Double value : vector){
+            normalVector.add(value / length);
+        }
+
+        return normalVector;
+    }
+
+    public double vectorProduct(Vector<Double> v1, Vector<Double> v2){
+        double product = 0.0;
+
+        for(Iterator<Double> itv1 = v1.iterator(), itv2 = v2.iterator(); itv1.hasNext() && itv2.hasNext();){
+            product += itv1.next().doubleValue() * itv2.next().doubleValue();
+        }
+
+        return product;
     }
 
 }
