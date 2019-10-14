@@ -6,6 +6,8 @@ import index.ReverseIndex;
 import ranking.Query;
 import ranking.RankingTool;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class Retriever {
@@ -19,6 +21,7 @@ public class Retriever {
         index.populateIndex(doc);
         documents.add(doc);
     }
+
 
     public void addDocument(Document doc) throws NotValidDocumentException {
         index.populateIndex(doc);
@@ -57,15 +60,15 @@ public class Retriever {
             }
         }
 
-        System.out.println(queryVector);
-        System.out.println(documentVector);
+        //System.out.println(queryVector);
+        //System.out.println(documentVector);
 
 
         queryVector = rtool.vectorNormalize(queryVector, queryLength);
         documentVector = rtool.vectorNormalize(documentVector, documentLength);
 
-        System.out.println(queryVector);
-        System.out.println(documentVector);
+        //System.out.println(queryVector);
+        //System.out.println(documentVector);
 
         score = rtool.vectorProduct(queryVector, documentVector);
 

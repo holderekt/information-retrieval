@@ -8,16 +8,16 @@ public class Main {
 
     public static void main(String[] args) throws NotValidDocumentException {
         Retriever ir = new Retriever();
-        ir.addDocument("Emma Marrone", "document.txt");
-        ir.addDocument("Hitler", "document2.txt");
-        ir.addDocument("Berlino", "document3.txt");
-        ir.addDocument("Videogiochi e Nazismo", "documento4.txt");
+        ir.addDocument("DOC1", "document.txt");
+        ir.addDocument("DOC2", "document2.txt");
+        ir.addDocument("DOC3", "document3.txt");
+        ir.addDocument("DOC4", "documento4.txt");
 
         System.out.println(ir);
-        Query query = new Query("berlino");
+        Query query = new Query("cinque otto");
 
         for(Document d : ir.getDocuments()){
-            System.out.println(d.getName() + " - Score: " + ir.cosineSimilarity(query, d));
+            System.out.println(d.getName() + " - Score: "  + (int)(ir.cosineSimilarity(query, d)*100));
         }
 
     }
