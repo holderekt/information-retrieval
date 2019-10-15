@@ -32,6 +32,17 @@ public class RankingTool {
         return 0.0;
     }
 
+    public Vector<Double> termFrequency(Set<String> words, Query query){
+        Vector<Double> result = new Vector<>();
+        for(String word : words){
+            if(query.getWords().contains(word)){
+                result.add(Math.log(1 + query.get(word)));
+            }
+        }
+
+        return result;
+    }
+
     public double documentFrequency(String word, ReverseIndex index){
         PostingList list = index.get(word);
 
@@ -74,6 +85,10 @@ public class RankingTool {
     public Vector<Double> tfidf(Set<String> word, Query query, ReverseIndex index){
         Vector<Double> tfidfvector = new Vector<Double>();
         for(String s : word){
+            //System.out.println("[" + s +  ":" + tfidf(s, query, index));
+            //System.out.println("TF:" + termFrequency(s, query));
+            //System.out.println("N: "+index.getDocumentNumber() + " DF:" + documentFrequency(s, index));
+            //System.out.println("IDF:" + inverseDocumentFrequency(index.getDocumentNumber(), documentFrequency(s, index)));
             tfidfvector.add(tfidf(s, query, index));
         }
 

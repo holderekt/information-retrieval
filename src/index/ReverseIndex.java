@@ -10,6 +10,7 @@ import java.util.Set;
 public class ReverseIndex implements Index{
     private HashMap<String, PostingList> dictionary = new HashMap<>();
     private int documentNumber;
+
     public ReverseIndex(){ documentNumber = 0;}
 
     @Override

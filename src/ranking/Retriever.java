@@ -46,7 +46,11 @@ public class Retriever {
     public double cosineSimilarity(Query query, Document document){
         RankingTool rtool = RankingTool.getInstance();
         double score = 0.0;
-        double queryLength = rtool.vectorLength(rtool.tfidf(query.getWords(), query, index));
+
+        //System.out.println(query.getWords());
+        //System.out.println(rtool.tfidf(query.getWords(), query, index));
+
+        double queryLength = rtool.vectorLength(rtool.termFrequency(query.getWords(), query));
         double documentLength = rtool.vectorLength(rtool.tfidf(document.getWords(), document, index));
         Vector<Double> queryVector = new Vector<>();
         Vector<Double> documentVector = new Vector<>();
@@ -54,12 +58,13 @@ public class Retriever {
         for(String word : query.getWords()){
             if(index.get(word) != null){
                 if(index.get(word).contains(document)){
-                    queryVector.add(rtool.tfidf(word, query, index));
+                    queryVector.add(rtool.termFrequency(word, query));
                     documentVector.add(rtool.tfidf(word, document, index));
                 }
             }
         }
 
+        //System.out.println("DL: " + documentLength + " QL:" + queryLength);
         //System.out.println(queryVector);
         //System.out.println(documentVector);
 
