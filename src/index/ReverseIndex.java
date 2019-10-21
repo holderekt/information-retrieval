@@ -1,8 +1,11 @@
 package index;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import utils.TextUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
@@ -14,7 +17,7 @@ public class ReverseIndex implements Index{
     public ReverseIndex(){ documentNumber = 0;}
 
     @Override
-    public void populateIndex(Document document) throws NotValidDocumentException{
+    public void populateIndex(Document document) throws NotValidDocumentException, IOException {
 
         HashMap<String, Integer> wordbag = generateWordbag(document);
         Set<String> words = wordbag.keySet();
@@ -34,17 +37,17 @@ public class ReverseIndex implements Index{
         documentNumber = documentNumber + 1;
     }
 
-    private HashMap<String, Integer> generateWordbag(Document document) throws NotValidDocumentException {
+    private HashMap<String, Integer> generateWordbag(Document document) throws NotValidDocumentException, IOException {
+
+        PDDocument ddocument = PDDocument.load(new File(document.getFilename()));
+        PDFTextStripper stripper = new PDFTextStripper();
+        String text = stripper.getText(ddocument);
+        ddocument.close();
 
         TextUtils filter = TextUtils.getInstance();
-        File file = new File(document.getFilename());
+        //File file = new File(document.getFilename());
         Scanner scanner;
-
-        try{
-            scanner = new Scanner(file);
-        }catch(FileNotFoundException e){
-            throw  new NotValidDocumentException("Document not found");
-        }
+        scanner = new Scanner(text);
 
         scanner.useDelimiter(" ");
 

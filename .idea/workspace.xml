@@ -2,13 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6cc74b5-2b6e-4112-b79d-98192edc0da0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/document4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Astrazione_Progettazione.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Astrazione_Programmazione.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Contenitori.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Eccezioni.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Funzionale.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Generics.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/IO.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Information_Hiding.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Ingegneria Conoscenza.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/JDBC.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Oggetti_Java.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Operatori_Java.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/ParadigmaOO.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Paradigmi.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Passaggio_Parametri.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Polimorfismo.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/RTTI.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Riuso_Classi.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Socket.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/Thread.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/commons-logging-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/fontbox-2.0.17.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pdfbox-2.0.17.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cosine-similarity.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cosine-similarity.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/document.txt" beforeDir="false" afterPath="$PROJECT_DIR$/document.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/document2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/document2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/document3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/document3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documento4.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/index/Index.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index/ReverseIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/index/ReverseIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ranking/RankingTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ranking/RankingTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ranking/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ranking/Pair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ranking/Retriever.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ranking/Retriever.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,8 +57,20 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1SChuJbTeQX2U3eBWFm9BP9rXAL" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -89,5 +129,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
