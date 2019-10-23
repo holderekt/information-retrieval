@@ -1,11 +1,11 @@
-import index.Document;
-import index.NotValidDocumentException;
+import index.*;
 import org.apache.pdfbox.text.PDFTextStripper;
 import ranking.Pair;
 import ranking.Query;
 import ranking.Retriever;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
+import javax.swing.event.DocumentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -14,15 +14,29 @@ import java.util.Vector;
 public class  Main {
 
     public static void main(String[] args) throws NotValidDocumentException, IOException {
+
+        Document a = new Document("Mario", "/home/navis/workspace/cosine-similarity/documents/Astrazione_Progettazione.pdf");
+        DocumentProcesser processer = new DocumentProcesser();
+        WordBag bag = processer.generateWordBag(a);
+        System.out.println(bag);
+        ReverseIndex index = new ReverseIndex();
+        index.populateIndex(a);
+        System.out.println(index);
+
+
         Retriever ir = new Retriever();
+        //Document a = new Document("a", "...mario...ciao ....jaaja..exe.abc.pdf");
+        //System.out.println(a.getFileType());
         ir.loadFolder("documents/");
 
-        Query query = new Query("ingegneria e intelligenza artificiale");
+        Query query = new Query("funzionale");
         Vector<Pair> lista = new Vector<>();
+
 
         for(Document d : ir.getDocuments()){
             lista.add(new Pair(d.getName(), (ir.cosineSimilarity(query, d))));
         }
+
 
         shit(lista);
     }

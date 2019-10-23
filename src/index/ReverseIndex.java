@@ -1,10 +1,6 @@
 package index;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
+import utils.DocumentLoader;
 import utils.TextUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -13,15 +9,22 @@ import java.util.Set;
 public class ReverseIndex implements Index{
     private HashMap<String, PostingList> dictionary = new HashMap<>();
     private int documentNumber;
+    private DocumentLoader loader;
+    DocumentProcesser processer = new DocumentProcesser();
 
-    public ReverseIndex(){ documentNumber = 0;}
+    public ReverseIndex() throws IOException {
+        loader = new DocumentLoader();
+        documentNumber = 0;
+    }
+
 
     @Override
-    public void populateIndex(Document document) throws NotValidDocumentException, IOException {
+    public void populateIndex(Document document) throws IOException {
 
-        HashMap<String, Integer> wordbag = generateWordbag(document);
-        Set<String> words = wordbag.keySet();
-        PostingList list;
+       WordBag wordbag = processer.generateWordBag(document);
+       document.setContent(wordbag.getWords());
+       Set<String> words = wordbag.getWords();
+       PostingList list;
 
         for(String word : words){
             if(dictionary.get(word) == null){
@@ -30,22 +33,17 @@ public class ReverseIndex implements Index{
                 list = dictionary.get(word);
             }
 
-            list.add(document, wordbag.get(word));
+            list.add(document, wordbag.getNumber(word));
             dictionary.put(word, list);
         }
 
         documentNumber = documentNumber + 1;
     }
 
-    private HashMap<String, Integer> generateWordbag(Document document) throws NotValidDocumentException, IOException {
+    private HashMap<String, Integer> generateWordbag(Document document) throws IOException {
 
-        PDDocument ddocument = PDDocument.load(new File(document.getFilename()));
-        PDFTextStripper stripper = new PDFTextStripper();
-        String text = stripper.getText(ddocument);
-        ddocument.close();
-
+        String text = loader.loadDocument(document);
         TextUtils filter = TextUtils.getInstance();
-        //File file = new File(document.getFilename());
         Scanner scanner;
         scanner = new Scanner(text);
 

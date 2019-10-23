@@ -12,6 +12,11 @@ public class Document {
         this.filename = filename;
     }
 
+    public String getFileType(){
+        String[] stringTokens = filename.split("\\.");
+        return  stringTokens[stringTokens.length - 1];
+    }
+
     public void setContent(Set<String> content) {
         this.content = content;
     }
@@ -19,6 +24,7 @@ public class Document {
     public String getName(){
         return this.name;
     }
+
     public String getFilename(){
         return this.filename;
     }

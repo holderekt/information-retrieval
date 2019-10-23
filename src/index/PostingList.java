@@ -3,6 +3,7 @@ package index;
 import java.util.HashMap;
 
 public class PostingList {
+
     private HashMap<Document, Integer> list;
 
     PostingList(){
@@ -36,6 +37,9 @@ public class PostingList {
     }
 
     public boolean contains(Document document){
-        return list.keySet().contains(document);
+        if(list.get(document) == null){
+            return false;
+        }
+        return true;
     }
 }

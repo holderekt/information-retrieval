@@ -15,9 +15,11 @@ import java.util.Vector;
 
 public class Retriever {
     Vector<Document> documents = new Vector<>();
-    ReverseIndex index = new ReverseIndex();
+    ReverseIndex index;
 
-    public Retriever(){};
+    public Retriever() throws IOException {
+        index = new ReverseIndex();
+    };
 
     public void addDocument(String title, String filename) throws NotValidDocumentException, IOException {
         Document doc = new Document(title, filename);
