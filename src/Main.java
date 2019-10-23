@@ -4,16 +4,22 @@ import ranking.Pair;
 import ranking.Query;
 import ranking.Retriever;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import utils.FileUtils;
 
-import javax.swing.event.DocumentEvent;
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Vector;
 
 public class  Main {
 
     public static void main(String[] args) throws NotValidDocumentException, IOException {
+
+        FileUtils fu = new FileUtils();
+        Vector<File> mario = fu.getFolderFilesRecursive("/home/navis/workspace", "pdf");
+
+        for(File a : mario){
+            System.out.println(a.getName());
+        }
 
         Document a = new Document("Mario", "/home/navis/workspace/cosine-similarity/documents/Astrazione_Progettazione.pdf");
         DocumentProcesser processer = new DocumentProcesser();
@@ -39,6 +45,9 @@ public class  Main {
 
 
         shit(lista);
+
+
+
     }
 
 
