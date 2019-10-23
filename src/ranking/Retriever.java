@@ -3,19 +3,13 @@ package ranking;
 import index.Document;
 import index.NotValidDocumentException;
 import index.ReverseIndex;
-import ranking.Query;
-import ranking.RankingTool;
-
-import javax.xml.bind.util.ValidationEventCollector;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.*;
 
 public class Retriever {
-    Vector<Document> documents = new Vector<>();
     ReverseIndex index;
+    HashMap<Document, Double> documents = new HashMap<>();
 
     public Retriever() throws IOException {
         index = new ReverseIndex();
@@ -24,25 +18,35 @@ public class Retriever {
     public void addDocument(String title, String filename) throws NotValidDocumentException, IOException {
         Document doc = new Document(title, filename);
         index.populateIndex(doc);
-        documents.add(doc);
     }
 
 
     public void addDocument(Document doc) throws NotValidDocumentException, IOException {
         index.populateIndex(doc);
-        documents.add(doc);
     }
 
     public void loadFolder(String folder_path) throws IOException, NotValidDocumentException {
+        RankingTool rtool = RankingTool.getInstance();
+        HashMap<Document, Set<String>> map = new HashMap<>();
         // TODO ONLY TEST I GOTTA REMOVE THIS SHIT
         File folder = new File(folder_path);
         for(File file : folder.listFiles()){
             if(file.isFile()){
                 Document a = new Document(file.getName(), file.getAbsolutePath());
-                index.populateIndex(a);
-                documents.add(a);
+                Set<String> mario = index.populateIndex(a);
+
+               map.put(a, mario);
             }
+
+            for(Document d : map.keySet()){
+                Set<String> words = map.get(d);
+                double val  = rtool.vectorLength(rtool.tfidf(words, d, index));
+                documents.put(d, val);
+            }
+
         }
+
+
     }
 
     public double tfidfSimilarity(Query query, Document document){
@@ -64,11 +68,7 @@ public class Retriever {
         RankingTool rtool = RankingTool.getInstance();
         double score = 0.0;
 
-        //System.out.println(query.getWords());
-        //System.out.println(rtool.tfidf(query.getWords(), query, index));
-
         double queryLength = rtool.vectorLength(rtool.termFrequency(query.getWords(), query));
-        double documentLength = rtool.vectorLength(rtool.tfidf(document.getWords(), document, index));
         Vector<Double> queryVector = new Vector<>();
         Vector<Double> documentVector = new Vector<>();
 
@@ -81,24 +81,17 @@ public class Retriever {
             }
         }
 
-        //System.out.println("DL: " + documentLength + " QL:" + queryLength);
-        //System.out.println(queryVector);
-        //System.out.println(documentVector);
-
 
         queryVector = rtool.vectorNormalize(queryVector, queryLength);
-        documentVector = rtool.vectorNormalize(documentVector, documentLength);
-
-        //System.out.println(queryVector);
-        //System.out.println(documentVector);
+        documentVector = rtool.vectorNormalize(documentVector, documents.get(document));
 
         score = rtool.vectorProduct(queryVector, documentVector);
 
         return score;
     }
 
-    public Vector<Document> getDocuments() {
-        return documents;
+    public Set<Document> getDocuments(){
+        return documents.keySet();
     }
 
     @Override

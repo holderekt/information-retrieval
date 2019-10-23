@@ -1,7 +1,8 @@
 package index;
 
 import java.io.IOException;
+import java.util.Set;
 
 public interface Index {
-    void populateIndex(Document document) throws NotValidDocumentException, IOException;
+  Set<String> populateIndex(Document document) throws NotValidDocumentException, IOException;
 }

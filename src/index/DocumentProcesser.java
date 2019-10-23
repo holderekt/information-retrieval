@@ -2,15 +2,19 @@ package index;
 
 import utils.DocumentLoader;
 import utils.TextUtils;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class DocumentProcesser {
     private DocumentLoader loader;
+    private TextUtils filter;
 
     public DocumentProcesser() throws IOException {
         loader = new DocumentLoader();
+        filter = TextUtils.getInstance();
     }
+
 
     public WordBag generateWordBag(Document document) throws IOException {
         String documentText = loader.loadDocument(document);
@@ -23,9 +27,9 @@ public class DocumentProcesser {
         String[] buffer;
 
         while(scanner.hasNext()){
-            buffer = textFilter(scanner.next());
+            buffer = filter.textFilter(scanner.next());
             for(String word : buffer){
-                if(wordCheck(word)){
+                if(filter.wordCheck(word)){
                     if(wordbag.contains(word)){
                         wordbag.addToNumber(word, 1);
                     }else{
@@ -36,13 +40,5 @@ public class DocumentProcesser {
         }
 
         return wordbag;
-    }
-
-    private String[] textFilter(String word){
-        return word.replaceAll("[^a-zA-Z ]", " ").toLowerCase().split("\\s+");
-    }
-
-    private boolean wordCheck(String word){
-        return word.length() > 1;
     }
 }
