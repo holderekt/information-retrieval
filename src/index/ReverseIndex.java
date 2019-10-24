@@ -1,13 +1,12 @@
 package index;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class ReverseIndex implements Index{
     private HashMap<String, PostingList> dictionary = new HashMap<>();
     private int documentNumber = 0;
-    private DocumentProcesser processer = new DocumentProcesser();
+    private DocumentProcessor processor = new DocumentProcessor();
 
     public ReverseIndex() throws IOException {
     }
@@ -15,7 +14,7 @@ public class ReverseIndex implements Index{
     @Override
     public Set<String> populateIndex(Document document) throws IOException {
 
-       WordBag wordbag = processer.generateWordBag(document);
+       WordBag wordbag = processor.generateWordBag(document);
        Set<String> words = wordbag.getWords();
        PostingList list;
 

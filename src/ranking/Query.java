@@ -1,29 +1,16 @@
 package ranking;
 
-import utils.TextUtils;
-import java.util.HashMap;
+import index.DocumentProcessor;
+import index.WordBag;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Query implements Iterable{
-    private HashMap<String, Integer> list = new HashMap<String, Integer>();
+    private WordBag list;
 
-
-    public Query(String query){
-        TextUtils filter = TextUtils.getInstance();
-        String[] buffer;
-        for(String word : query.split(" ")){
-            buffer = filter.textFilter(word);
-            for(String w : buffer){
-                if(filter.wordCheck(w)){
-                    if(list.get(w) == null){
-                        list.put(w, 1);
-                    }else{
-                        list.put(w, list.get(w) + 1);
-                    }
-                }
-            }
-        }
+    public Query(String query) {
+        DocumentProcessor processor = new DocumentProcessor();
+        list = processor.generateWordBag(query);
     }
 
     @Override
@@ -33,12 +20,12 @@ public class Query implements Iterable{
 
     @Override
     public Iterator iterator() {
-        return list.keySet().iterator();
+        return list.getWords().iterator();
     }
 
     public Integer get(String word){
-        return list.get(word);
+        return list.getNumber(word);
     }
 
-    public Set<String> getWords(){return list.keySet();}
+    public Set<String> getWords(){return list.getWords();}
 }

@@ -6,25 +6,18 @@ import utils.TextUtils;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class DocumentProcesser {
-    private DocumentLoader loader;
+public class DocumentProcessor {
     private TextUtils filter;
 
-    public DocumentProcesser() throws IOException {
-        loader = new DocumentLoader();
+    public DocumentProcessor() {
         filter = TextUtils.getInstance();
     }
 
-
-    public WordBag generateWordBag(Document document) throws IOException {
-        String documentText = loader.loadDocument(document);
-
-        Scanner scanner;
-        scanner = new Scanner(documentText);
-        scanner.useDelimiter(" ");
+    public WordBag generateWordBag(String text){
 
         WordBag wordbag = new WordBag();
         String[] buffer;
+        Scanner scanner = new Scanner(text);
 
         while(scanner.hasNext()){
             buffer = filter.textFilter(scanner.next());
@@ -40,5 +33,12 @@ public class DocumentProcesser {
         }
 
         return wordbag;
+    }
+
+
+    public WordBag generateWordBag(Document document) throws IOException {
+        DocumentLoader loader = new DocumentLoader();
+        String documentText = loader.loadDocument(document);
+        return generateWordBag(documentText);
     }
 }
