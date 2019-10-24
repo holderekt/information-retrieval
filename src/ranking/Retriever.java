@@ -4,18 +4,29 @@ import index.Document;
 import index.ReverseIndex;
 import utils.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
-public class Retriever {
-    ReverseIndex index;
-    HashMap<Document, Double> documents;
-    boolean vectorLengthCalculated = false;
+public class Retriever implements Serializable{
+    private ReverseIndex index;
+    private HashMap<Document, Double> documents;
+    private boolean vectorLengthCalculated = false;
+    private transient String retfolderpath = "";
 
-    public Retriever() throws IOException {
-        index = new ReverseIndex();
-        documents = new HashMap<>();
+    public Retriever(String folderpath) throws IOException, ClassNotFoundException {
+        FileUtils flutil = new FileUtils();
+
+        if(flutil.getFolderFiles(folderpath, "index").size() >= 1){
+            System.out.println("[Index file found. Loading file]");
+            Retriever ret = loadData(folderpath);
+            this.index = ret.index;
+            this.documents = ret.documents;
+            this.vectorLengthCalculated = ret.vectorLengthCalculated;
+            this.retfolderpath = ret.retfolderpath;
+        }else{
+            index = new ReverseIndex();
+            documents = new HashMap<>();
+        }
     };
 
     public void loadFolder(String folderpath) throws IOException {
@@ -25,7 +36,15 @@ public class Retriever {
         for(File file : PDFFiles){
             Document document = new Document(file.getName(), file.getAbsolutePath());
             Set<String> documentWordSet = index.populateIndex(document);
-            document.setContent(documentWordSet);
+
+            //TODO Temporary solution
+            String[] temp = new String[documentWordSet.size()];
+            int position = 0;
+            for(String s : documentWordSet){
+                temp[position++] = s;
+            }
+            document.setContent(temp);
+
             documents.put(document, 0.0);
         }
 
@@ -88,6 +107,23 @@ public class Retriever {
         score = rtool.vectorProduct(queryVector, documentVector);
 
         return score;
+    }
+
+    public void saveData() throws IOException {
+        FileOutputStream stream = new FileOutputStream(retfolderpath + "/docindex.index");
+        ObjectOutputStream writer = new ObjectOutputStream(stream);
+        writer.writeObject(this);
+        writer.close();
+        stream.close();
+    }
+
+    public static Retriever loadData(String folderpath) throws IOException, ClassNotFoundException {
+        FileInputStream stream = new FileInputStream(folderpath + "/docindex.index");
+        ObjectInputStream reader = new ObjectInputStream(stream);
+        Retriever ret =  (Retriever) reader.readObject();
+        reader.close();
+        stream.close();
+        return ret;
     }
 
     public Set<Document> getDocuments(){

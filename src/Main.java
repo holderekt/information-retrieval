@@ -11,10 +11,9 @@ import java.util.Vector;
 
 public class  Main {
 
-    public static void main(String[] args) throws NotValidDocumentException, IOException {
+    public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException {
 
-        Retriever ir = new Retriever();
-        ir.loadFolder("/home/navis/Uni");
+        Retriever ir = new Retriever("/home/navis/workspace/cosine-similarity");
         System.out.println("[Documents successfully indexed]");
         System.out.println("[Total documents: " + ir.getDocuments().size() + " ]");
         BufferedReader reader =
@@ -39,6 +38,8 @@ public class  Main {
             }
 
         }while(!exit);
+
+        ir.saveData();
     }
 
 

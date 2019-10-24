@@ -1,8 +1,9 @@
 package index;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class PostingList {
+public class PostingList implements Serializable {
 
     private HashMap<Document, Integer> list;
 

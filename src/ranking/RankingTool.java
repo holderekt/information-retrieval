@@ -65,7 +65,7 @@ public class RankingTool {
         return tf * idf;
     }
 
-    public Vector<Double> tfidf(Set<String> word, Document document, ReverseIndex index){
+    public Vector<Double> tfidf(String[] word, Document document, ReverseIndex index){
         Vector<Double> tfidfvector = new Vector<Double>();
         for(String s : word){
             tfidfvector.add(tfidf(s, document, index));
@@ -82,7 +82,7 @@ public class RankingTool {
         return tf * idf;
     }
 
-    public Vector<Double> tfidf(Set<String> word, Query query, ReverseIndex index){
+    public Vector<Double> tfidf(String[] word, Query query, ReverseIndex index){
         Vector<Double> tfidfvector = new Vector<Double>();
         for(String s : word){
             //System.out.println("[" + s +  ":" + tfidf(s, query, index));

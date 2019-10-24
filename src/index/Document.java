@@ -1,22 +1,22 @@
 package index;
 
-import java.util.Set;
+import java.io.Serializable;
 
-public class Document {
+public class Document implements Serializable {
     private String name;
     private String filename;
-    private Set<String> content;
+    private String[] content;
 
     public Document(String name, String filename){
         this.name = name;
         this.filename = filename;
     }
 
-    public void setContent(Set<String> content) {
+    public void setContent(String[] content) {
         this.content = content;
     }
 
-    public Set<String> getContent() {
+    public String[] getContent() {
         return content;
     }
 

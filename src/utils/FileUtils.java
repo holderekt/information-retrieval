@@ -26,7 +26,7 @@ public class FileUtils {
         Vector<File> files = new Vector<>();
         for(File file : folder.listFiles()){
             if(file.isFile()){
-                if(getFileType(file.getName()) == format){
+                if(getFileType(file.getName()).equals(format)){
                     files.add(file);
                 }
             }

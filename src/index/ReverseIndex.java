@@ -1,12 +1,13 @@
 package index;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
-public class ReverseIndex implements Index{
+public class ReverseIndex implements Index, Serializable{
     private HashMap<String, PostingList> dictionary = new HashMap<>();
     private int documentNumber = 0;
-    private DocumentProcessor processor = new DocumentProcessor();
+    transient private DocumentProcessor processor = new DocumentProcessor();
 
     public ReverseIndex() throws IOException {
     }
