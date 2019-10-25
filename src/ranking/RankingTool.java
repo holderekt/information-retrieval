@@ -1,5 +1,5 @@
 package ranking;
-import index.Document;
+import document.Document;
 import index.PostingList;
 import index.ReverseIndex;
 

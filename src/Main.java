@@ -1,3 +1,4 @@
+import document.Document;
 import index.*;
 import ranking.Pair;
 import ranking.Query;
@@ -13,7 +14,8 @@ public class  Main {
 
     public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException {
 
-        Retriever ir = new Retriever("/home/navis/workspace/cosine-similarity");
+        Retriever ir = new Retriever();
+        ir.loadFolder("/home/navis/Uni");
         System.out.println("[Documents successfully indexed]");
         System.out.println("[Total documents: " + ir.getDocuments().size() + " ]");
         BufferedReader reader =

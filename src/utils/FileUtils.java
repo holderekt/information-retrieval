@@ -16,6 +16,10 @@ public class FileUtils {
         return files;
     }
 
+    public File getFile(String filepath){
+        return new File(filepath);
+    }
+
     public String getFileType(String filename){
         String[] stringTokens = filename.split("\\.");
         return  stringTokens[stringTokens.length - 1];

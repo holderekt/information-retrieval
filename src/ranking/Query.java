@@ -1,7 +1,7 @@
 package ranking;
 
-import index.DocumentProcessor;
-import index.WordBag;
+import document.TextProcessor;
+import document.WordBag;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -9,7 +9,7 @@ public class Query implements Iterable{
     private WordBag list;
 
     public Query(String query) {
-        DocumentProcessor processor = new DocumentProcessor();
+        TextProcessor processor = new TextProcessor();
         list = processor.generateWordBag(query);
     }
 

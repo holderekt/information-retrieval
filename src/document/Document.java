@@ -1,25 +1,26 @@
-package index;
+package document;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class Document implements Serializable {
     private String name;
     private String filename;
-    private String[] content;
+    private WordBag wordBag;
 
-    public Document(String name, String filename){
+    public Document(String name, String filename, WordBag wordBag){
         this.name = name;
         this.filename = filename;
+        this.wordBag = wordBag;
     }
 
-    public void setContent(String[] content) {
-        this.content = content;
+    public Set<String> getContent() {
+        return wordBag.getWords();
     }
 
-    public String[] getContent() {
-        return content;
+    public Integer getWordOccurence(String word){
+        return wordBag.getNumber(word);
     }
-
 
     public String getName(){
         return this.name;
@@ -31,7 +32,6 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        String result = this.name;
-        return result;
+        return name;
     }
 }

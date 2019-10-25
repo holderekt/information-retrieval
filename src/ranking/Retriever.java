@@ -1,6 +1,9 @@
 package ranking;
 
-import index.Document;
+import document.Document;
+import document.DocumentLoader;
+import document.TextProcessor;
+import document.WordBag;
 import index.ReverseIndex;
 import utils.FileUtils;
 
@@ -11,7 +14,9 @@ public class Retriever implements Serializable{
     private ReverseIndex index;
     private HashMap<Document, Double> documents;
     private boolean vectorLengthCalculated = false;
-    private transient String retfolderpath = "";
+    private transient String indexFolderPath = "";
+    private transient DocumentLoader loader = new DocumentLoader();
+    private transient TextProcessor processor = new TextProcessor();
 
     public Retriever(String folderpath) throws IOException, ClassNotFoundException {
         FileUtils flutil = new FileUtils();
@@ -22,12 +27,17 @@ public class Retriever implements Serializable{
             this.index = ret.index;
             this.documents = ret.documents;
             this.vectorLengthCalculated = ret.vectorLengthCalculated;
-            this.retfolderpath = ret.retfolderpath;
+            this.indexFolderPath = ret.indexFolderPath;
         }else{
             index = new ReverseIndex();
             documents = new HashMap<>();
         }
-    };
+    }
+
+    public Retriever() throws IOException {
+        index = new ReverseIndex();
+        documents = new HashMap<>();
+    }
 
     public void loadFolder(String folderpath) throws IOException {
         FileUtils flutil = new FileUtils();
@@ -35,7 +45,10 @@ public class Retriever implements Serializable{
 
         for(File file : PDFFiles){
             Document document = new Document(file.getName(), file.getAbsolutePath());
-            Set<String> documentWordSet = index.populateIndex(document);
+            String documentFullContent = loader.loadDocument(document);
+            WordBag wordbag = processor.generateWordBag(documentFullContent);
+            Set<String> documentWordSet = wordbag.getWords();
+            index.populateIndex(document, wordbag);
 
             //TODO Temporary solution
             String[] temp = new String[documentWordSet.size()];
@@ -110,7 +123,7 @@ public class Retriever implements Serializable{
     }
 
     public void saveData() throws IOException {
-        FileOutputStream stream = new FileOutputStream(retfolderpath + "/docindex.index");
+        FileOutputStream stream = new FileOutputStream(indexFolderPath + "/docindex.index");
         ObjectOutputStream writer = new ObjectOutputStream(stream);
         writer.writeObject(this);
         writer.close();

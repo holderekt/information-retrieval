@@ -1,5 +1,7 @@
 package index;
 
+import document.Document;
+
 import java.io.Serializable;
 import java.util.HashMap;
 

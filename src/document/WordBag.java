@@ -1,4 +1,4 @@
-package index;
+package document;
 
 import java.util.HashMap;
 import java.util.Set;

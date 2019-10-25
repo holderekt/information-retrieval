@@ -1,5 +1,4 @@
-package utils;
-import index.Document;
+package document;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import java.io.File;
@@ -12,8 +11,8 @@ public class DocumentLoader {
         stripper = new PDFTextStripper();
     }
 
-    public String loadDocument(Document document) throws IOException {
-        PDDocument pdfdoc = PDDocument.load(new File(document.getFilename()));
+    public String loadDocumentText(String filepath) throws IOException {
+        PDDocument pdfdoc = PDDocument.load(new File(filepath));
         String result = stripper.getText(pdfdoc);
         pdfdoc.close();
         return result;
