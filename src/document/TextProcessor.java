@@ -1,6 +1,4 @@
 package document;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class TextProcessor {
@@ -29,13 +27,6 @@ public class TextProcessor {
         }
 
         return wordbag;
-    }
-
-
-    public WordBag generateWordBag(Document document) throws IOException {
-        DocumentLoader loader = new DocumentLoader();
-        String documentText = loader.loadDocument(document);
-        return generateWordBag(documentText);
     }
 
     private String[] textFilter(String word){

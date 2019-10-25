@@ -1,12 +1,7 @@
 package ranking;
 
-import document.Document;
-import document.DocumentLoader;
-import document.TextProcessor;
-import document.WordBag;
+import document.*;
 import index.ReverseIndex;
-import utils.FileUtils;
-
 import java.io.*;
 import java.util.*;
 
@@ -15,10 +10,11 @@ public class Retriever implements Serializable{
     private HashMap<Document, Double> documents;
     private boolean vectorLengthCalculated = false;
     private transient String indexFolderPath = "";
-    private transient DocumentLoader loader = new DocumentLoader();
-    private transient TextProcessor processor = new TextProcessor();
+    private transient DocumentProcessor processor = new DocumentProcessor();
 
     public Retriever(String folderpath) throws IOException, ClassNotFoundException {
+
+        /*
         FileUtils flutil = new FileUtils();
 
         if(flutil.getFolderFiles(folderpath, "index").size() >= 1){
@@ -32,6 +28,7 @@ public class Retriever implements Serializable{
             index = new ReverseIndex();
             documents = new HashMap<>();
         }
+         */
     }
 
     public Retriever() throws IOException {
@@ -39,26 +36,12 @@ public class Retriever implements Serializable{
         documents = new HashMap<>();
     }
 
-    public void loadFolder(String folderpath) throws IOException {
-        FileUtils flutil = new FileUtils();
-        Vector<File> PDFFiles = flutil.getFolderFilesRecursive(folderpath, "pdf");
+    public void loadFolder(String folderpath) throws DocumentException {
+        Vector<Document> documents = processor.loadDocumentsFromFolderRecursive(folderpath);
 
-        for(File file : PDFFiles){
-            Document document = new Document(file.getName(), file.getAbsolutePath());
-            String documentFullContent = loader.loadDocument(document);
-            WordBag wordbag = processor.generateWordBag(documentFullContent);
-            Set<String> documentWordSet = wordbag.getWords();
-            index.populateIndex(document, wordbag);
-
-            //TODO Temporary solution
-            String[] temp = new String[documentWordSet.size()];
-            int position = 0;
-            for(String s : documentWordSet){
-                temp[position++] = s;
-            }
-            document.setContent(temp);
-
-            documents.put(document, 0.0);
+        for(Document document : documents){
+            index.populateIndex(document);
+            this.documents.put(document, 0.0);
         }
 
         vectorLengthCalculated = false;

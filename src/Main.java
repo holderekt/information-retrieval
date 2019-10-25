@@ -1,4 +1,5 @@
 import document.Document;
+import document.DocumentException;
 import index.*;
 import ranking.Pair;
 import ranking.Query;
@@ -12,7 +13,7 @@ import java.util.Vector;
 
 public class  Main {
 
-    public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException, DocumentException {
 
         Retriever ir = new Retriever();
         ir.loadFolder("/home/navis/Uni");
