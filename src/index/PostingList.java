@@ -1,19 +1,17 @@
 package index;
 
-import document.Document;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class PostingList implements Serializable {
+public class PostingList<CLNAME extends Resource> implements Serializable {
 
-    private HashMap<Document, Integer> list;
+    private HashMap<CLNAME, Integer> list;
 
     PostingList(){
         this.list = new HashMap<>();
     }
 
-    public void add(Document document, Integer number){
+    public void add(CLNAME document, Integer number){
         if(list.get(document) == null ){
             list.put(document, number);
         }else{
@@ -24,14 +22,14 @@ public class PostingList implements Serializable {
     @Override
     public String toString() {
         String result = "[";
-        for(Document doc : list.keySet()){
+        for(CLNAME doc : list.keySet()){
             result += doc.toString() + ":" + list.get(doc).toString() + " ";
         }
         result += "]";
         return  result;
     }
 
-    public Integer get(Document document){
+    public Integer get(CLNAME document){
         return list.get(document);
     }
 
@@ -39,7 +37,7 @@ public class PostingList implements Serializable {
         return list.keySet().size();
     }
 
-    public boolean contains(Document document){
+    public boolean contains(CLNAME document){
         if(list.get(document) == null){
             return false;
         }

@@ -31,7 +31,7 @@ public class  Main {
                 Query query = new Query(response);
                 Vector<Pair> lista = new Vector<>();
 
-                for(Document d : ir.getDocuments()){
+                for(Resource d : ir.getDocuments()){
                     lista.add(new Pair(d.getName(), (ir.cosineSimilarity(query, d))));
                 }
 

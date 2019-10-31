@@ -1,6 +1,6 @@
 package ranking;
-import document.Document;
 import index.PostingList;
+import index.Resource;
 import index.ReverseIndex;
 
 import java.util.Iterator;
@@ -12,8 +12,8 @@ public class RankingTool {
     private RankingTool(){}
     public static final RankingTool getInstance(){return ranker;}
 
-    public double termFrequency(String word, Document document, ReverseIndex index){
-        PostingList list = index.get(word);
+    public double termFrequency(String word, Resource document, ReverseIndex index){
+        PostingList<Resource> list = index.get(word);
 
         if(list != null){
             if(list.contains(document)){
@@ -57,7 +57,7 @@ public class RankingTool {
         return Math.log(documentNumber / documentFrequency);
     }
 
-    public double tfidf(String word, Document document, ReverseIndex index){
+    public double tfidf(String word, Resource document, ReverseIndex index){
         double tf = termFrequency(word, document, index);
         double df = documentFrequency(word, index);
         double idf = inverseDocumentFrequency(index.getDocumentNumber(), df);
@@ -65,7 +65,7 @@ public class RankingTool {
         return tf * idf;
     }
 
-    public Vector<Double> tfidf(Set<String> word, Document document, ReverseIndex index){
+    public Vector<Double> tfidf(Set<String> word, Resource document, ReverseIndex index){
         Vector<Double> tfidfvector = new Vector<Double>();
         for(String s : word){
             tfidfvector.add(tfidf(s, document, index));

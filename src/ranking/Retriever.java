@@ -1,13 +1,14 @@
 package ranking;
 
 import document.*;
+import index.Resource;
 import index.ReverseIndex;
 import java.io.*;
 import java.util.*;
 
 public class Retriever implements Serializable{
-    private ReverseIndex index;
-    private HashMap<Document, Double> documents;
+    private ReverseIndex<Resource> index;
+    private HashMap<Resource, Double> documents;
     private boolean vectorLengthCalculated = false;
     private transient String indexFolderPath = "";
     private transient DocumentProcessor processor = new DocumentProcessor();
@@ -49,7 +50,7 @@ public class Retriever implements Serializable{
 
     private void generateLength(){
         RankingTool ranker = RankingTool.getInstance();
-        for(Document document : documents.keySet()){
+        for(Resource document : documents.keySet()){
             documents.put(document, ranker.vectorLength(ranker.tfidf(document.getContent(),document,index)));
         }
 
@@ -73,7 +74,7 @@ public class Retriever implements Serializable{
         return score;
     }
 
-    public double cosineSimilarity(Query query, Document document){
+    public double cosineSimilarity(Query query, Resource document){
 
         if(!vectorLengthCalculated){
             generateLength();
@@ -122,7 +123,7 @@ public class Retriever implements Serializable{
         return ret;
     }
 
-    public Set<Document> getDocuments(){
+    public Set<Resource> getDocuments(){
         return documents.keySet();
     }
 
