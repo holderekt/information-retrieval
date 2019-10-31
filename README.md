@@ -2,7 +2,7 @@
 Information Retrieval Algorithms. Simple program made to
  test all the knowledge gathered during the course
  "Information Retrieval Methods".
-The main goal of this project is to index all documents
+The main goal of this project is to index all fileDocuments
 and books of my university courses and give the best result
 on a given query. The project is and will remain a **work in progress**.
 
@@ -16,4 +16,4 @@ The program indexes files using a **reverse index**,
 ## Future Aims
 Some relevance feedback from the user, 
 a JavaFX UI and some kind of evaluation algorithm to ensure the 
-relevance of the documents retrieved
+relevance of the fileDocuments retrieved

@@ -85,10 +85,6 @@ public class RankingTool {
     public Vector<Double> tfidf(Set<String> word, Query query, ReverseIndex index){
         Vector<Double> tfidfvector = new Vector<Double>();
         for(String s : word){
-            //System.out.println("[" + s +  ":" + tfidf(s, query, index));
-            //System.out.println("TF:" + termFrequency(s, query));
-            //System.out.println("N: "+index.getDocumentNumber() + " DF:" + documentFrequency(s, index));
-            //System.out.println("IDF:" + inverseDocumentFrequency(index.getDocumentNumber(), documentFrequency(s, index)));
             tfidfvector.add(tfidf(s, query, index));
         }
 

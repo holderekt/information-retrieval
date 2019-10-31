@@ -14,7 +14,7 @@ public class DocumentProcessor {
     public DocumentProcessor() throws IOException {
     }
 
-    public Document loadDocumentFromFile(File documentFile) throws DocumentException {
+    public FileDocument loadDocumentFromFile(File documentFile) throws DocumentException {
         if(documentFile.exists()){
             String text;
             try{
@@ -24,31 +24,31 @@ public class DocumentProcessor {
             }
 
             WordBag wordBag = processor.generateWordBag(text);
-            return new Document(documentFile.getName(), documentFile.getAbsolutePath(), wordBag);
+            return new FileDocument(documentFile.getName(), documentFile.getAbsolutePath(), wordBag);
         }else{
             throw new DocumentException("Document file not found");
         }
     }
 
-    public Document loadDocumentFromFile(String filepath) throws DocumentException {
+    public FileDocument loadDocumentFromFile(String filepath) throws DocumentException {
         return loadDocumentFromFile(fileutil.getFile(filepath));
     }
 
-    public Vector<Document> loadDocumentsFromFolder(String folderpath) throws DocumentException {
+    public Vector<FileDocument> loadDocumentsFromFolder(String folderpath) throws DocumentException {
         Vector<File> PDFFiles = fileutil.getFolderFiles(folderpath, "pdf");
-        Vector<Document> documents = new Vector<>();
+        Vector<FileDocument> fileDocuments = new Vector<>();
         for(File documentfile : PDFFiles){
-            documents.add(loadDocumentFromFile(documentfile));
+            fileDocuments.add(loadDocumentFromFile(documentfile));
         }
-        return documents;
+        return fileDocuments;
     }
 
-    public Vector<Document> loadDocumentsFromFolderRecursive(String folderpath) throws DocumentException {
+    public Vector<FileDocument> loadDocumentsFromFolderRecursive(String folderpath) throws DocumentException {
         Vector<File> PDFFiles = fileutil.getFolderFilesRecursive(folderpath, "pdf");
-        Vector<Document> documents = new Vector<>();
+        Vector<FileDocument> fileDocuments = new Vector<>();
         for(File documentfile : PDFFiles){
-            documents.add(loadDocumentFromFile(documentfile));
+            fileDocuments.add(loadDocumentFromFile(documentfile));
         }
-        return documents;
+        return fileDocuments;
     }
 }

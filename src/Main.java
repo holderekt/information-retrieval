@@ -1,4 +1,3 @@
-import document.Document;
 import document.DocumentException;
 import index.*;
 import ranking.Pair;

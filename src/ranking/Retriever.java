@@ -38,11 +38,11 @@ public class Retriever implements Serializable{
     }
 
     public void loadFolder(String folderpath) throws DocumentException {
-        Vector<Document> documents = processor.loadDocumentsFromFolderRecursive(folderpath);
+        Vector<FileDocument> fileDocuments = processor.loadDocumentsFromFolderRecursive(folderpath);
 
-        for(Document document : documents){
-            index.populateIndex(document);
-            this.documents.put(document, 0.0);
+        for(FileDocument fileDocument : fileDocuments){
+            index.populateIndex(fileDocument);
+            this.documents.put(fileDocument, 0.0);
         }
 
         vectorLengthCalculated = false;
@@ -59,14 +59,14 @@ public class Retriever implements Serializable{
 
 
 
-    public double tfidfSimilarity(Query query, Document document){
+    public double tfidfSimilarity(Query query, FileDocument fileDocument){
 
         RankingTool rtool = RankingTool.getInstance();
         double score = 0.0;
         for(String word : query.getWords()){
             if(index.get(word) != null){
-                if(index.get(word).contains(document)){
-                    score += rtool.tfidf(word, document, index);
+                if(index.get(word).contains(fileDocument)){
+                    score += rtool.tfidf(word, fileDocument, index);
                 }
             }
         }
