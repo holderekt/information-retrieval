@@ -14,13 +14,11 @@ public class RankingTool {
 
     public double termFrequency(String word, Resource document, ReverseIndex index){
         PostingList<Resource> list = index.get(word);
-
         if(list != null){
             if(list.contains(document)){
                 return Math.log(1 + list.get(document).doubleValue());
             }
         }
-
         return 0.0;
     }
 
@@ -28,20 +26,9 @@ public class RankingTool {
         if(query.getWords().contains(word)){
             return Math.log(1 + query.get(word));
         }
-
         return 0.0;
     }
 
-    public Vector<Double> termFrequency(Set<String> words, Query query){
-        Vector<Double> result = new Vector<>();
-        for(String word : words){
-            if(query.getWords().contains(word)){
-                result.add(Math.log(1 + query.get(word)));
-            }
-        }
-
-        return result;
-    }
 
     public double documentFrequency(String word, ReverseIndex index){
         PostingList list = index.get(word);
@@ -74,22 +61,6 @@ public class RankingTool {
         return tfidfvector;
     }
 
-    public double tfidf(String word, Query query, ReverseIndex index){
-        double tf = termFrequency(word, query);
-        double df = documentFrequency(word, index);
-        double idf = inverseDocumentFrequency(index.getDocumentNumber(), df);
-
-        return tf * idf;
-    }
-
-    public Vector<Double> tfidf(Set<String> word, Query query, ReverseIndex index){
-        Vector<Double> tfidfvector = new Vector<Double>();
-        for(String s : word){
-            tfidfvector.add(tfidf(s, query, index));
-        }
-
-        return tfidfvector;
-    }
 
     public double vectorLength(Vector<Double> vector){
         double length = 0.0;

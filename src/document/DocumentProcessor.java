@@ -3,6 +3,7 @@ package document;
 import utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Vector;
 
 public class DocumentProcessor {
@@ -10,45 +11,75 @@ public class DocumentProcessor {
     private TextProcessor processor = new TextProcessor();
     private DocumentLoader loader = new DocumentLoader();
     private FileUtils fileutil = new FileUtils();
+    private boolean logMessages;
 
-    public DocumentProcessor() throws IOException {
+    public DocumentProcessor(boolean logActive){
+        logMessages = logActive;
     }
 
-    public FileDocument loadDocumentFromFile(File documentFile) throws DocumentException {
-        if(documentFile.exists()){
-            String text;
-            try{
-                text = loader.loadDocumentText(documentFile.getAbsolutePath());
-            }catch(IOException e){
-                throw new DocumentException("Error loading document file");
+    public FileDocument loadFile(String filepath) throws DocumentException {
+        return loadFile(new File(filepath));
+    }
+
+    private FileDocument loadFile(File documentFile) throws DocumentException {
+        if(fileutil.isFile(documentFile)){
+            try {
+                String text = loader.loadDocumentText(documentFile);
+                WordBag wordBag = processor.generateWordBag(text);
+                return new FileDocument(documentFile.getName(), documentFile.getAbsolutePath(), wordBag);
+            } catch (IOException e) {
+                throw new DocumentException("Could not load file");
             }
-
-            WordBag wordBag = processor.generateWordBag(text);
-            return new FileDocument(documentFile.getName(), documentFile.getAbsolutePath(), wordBag);
         }else{
-            throw new DocumentException("Document file not found");
+            throw new DocumentException("File is not valid");
         }
     }
 
-    public FileDocument loadDocumentFromFile(String filepath) throws DocumentException {
-        return loadDocumentFromFile(fileutil.getFile(filepath));
+    public Collection<FileDocument> loadFolder(String folderpath) {
+        Collection<File> files = fileutil.getFolderFiles(folderpath, "pdf");
+        return loadDocuments(files);
     }
 
-    public Vector<FileDocument> loadDocumentsFromFolder(String folderpath) throws DocumentException {
-        Vector<File> PDFFiles = fileutil.getFolderFiles(folderpath, "pdf");
+    public Collection<FileDocument> loadFolderRecursive(String folderpath) {
+        Collection<File> files = fileutil.getFolderFilesRecursive(folderpath, "pdf");
+        return loadDocuments(files);
+    }
+
+    // TODO Rimuovere merda
+    private Collection<FileDocument> loadDocuments(Collection<File> files){
+        System.out.println("Loading Files:");
         Vector<FileDocument> fileDocuments = new Vector<>();
-        for(File documentfile : PDFFiles){
-            fileDocuments.add(loadDocumentFromFile(documentfile));
+        int n = files.size();
+        int i=0;
+        for(File documentfile : files){
+            FileDocument loadedFile = null;
+            try {
+                loadedFile = loadFile(documentfile);
+                fileDocuments.add(loadedFile);
+
+            } catch (DocumentException e) {
+                if(logMessages)
+                    System.out.println("[ WARNING] Could not load file: " + documentfile.getAbsolutePath());
+            }
+            printPercentage(i,n);
+            i++;
         }
+        if(logMessages)
+            System.out.println("\n[    INFO]: Loaded " + fileDocuments.size() + " files of " + files.size());
         return fileDocuments;
     }
 
-    public Vector<FileDocument> loadDocumentsFromFolderRecursive(String folderpath) throws DocumentException {
-        Vector<File> PDFFiles = fileutil.getFolderFilesRecursive(folderpath, "pdf");
-        Vector<FileDocument> fileDocuments = new Vector<>();
-        for(File documentfile : PDFFiles){
-            fileDocuments.add(loadDocumentFromFile(documentfile));
+    // TODO Rimuovere questa merda
+    public static void printPercentage(int percentage, int n){
+
+        int value = (percentage * 25) / n;
+        System.out.print("\r[");
+        for(int i=0; i<=value; i++){
+            System.out.print("#");
         }
-        return fileDocuments;
+        for(int i=value; i<=23; i++){
+            System.out.print(" ");
+        }
+        System.out.print("]");
     }
 }

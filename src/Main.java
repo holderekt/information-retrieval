@@ -12,7 +12,14 @@ import java.util.Vector;
 
 public class  Main {
 
-    public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException, DocumentException {
+    public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException, DocumentException, InterruptedException {
+        System.setProperty("org.apache.commons.logging.Log",
+                "org.apache.commons.logging.impl.NoOpLog");
+
+        java.util.logging.Logger
+                .getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
+        java.util.logging.Logger
+                .getLogger("org.apache.fontbox").setLevel(java.util.logging.Level.OFF);
 
         Retriever ir = new Retriever();
         ir.loadFolder("/home/navis/Uni");
@@ -41,8 +48,12 @@ public class  Main {
 
         }while(!exit);
 
-        ir.saveData();
+
+
+
     }
+
+
 
 
     public static void shit(Vector<Pair> mario){

@@ -7,44 +7,24 @@ import java.io.*;
 import java.util.*;
 
 public class Retriever implements Serializable{
-    private ReverseIndex<Resource> index;
-    private HashMap<Resource, Double> documents;
+    private ReverseIndex<Resource> index = new ReverseIndex<>();
+    private HashMap<Resource, Double> documents = new HashMap<>();
     private boolean vectorLengthCalculated = false;
-    private transient String indexFolderPath = "";
-    private transient DocumentProcessor processor = new DocumentProcessor();
+    private transient DocumentProcessor processor = new DocumentProcessor(true);
 
-    public Retriever(String folderpath) throws IOException, ClassNotFoundException {
-
-        /*
-        FileUtils flutil = new FileUtils();
-
-        if(flutil.getFolderFiles(folderpath, "index").size() >= 1){
-            System.out.println("[Index file found. Loading file]");
-            Retriever ret = loadData(folderpath);
-            this.index = ret.index;
-            this.documents = ret.documents;
-            this.vectorLengthCalculated = ret.vectorLengthCalculated;
-            this.indexFolderPath = ret.indexFolderPath;
-        }else{
-            index = new ReverseIndex();
-            documents = new HashMap<>();
-        }
-         */
+    public void loadFile(String filepath) throws DocumentException{
+        FileDocument document = processor.loadFile(filepath);
+        index.populateIndex(document);
+        this.documents.put(document, 0.0);
+        vectorLengthCalculated = false;
     }
 
-    public Retriever() throws IOException {
-        index = new ReverseIndex();
-        documents = new HashMap<>();
-    }
-
-    public void loadFolder(String folderpath) throws DocumentException {
-        Vector<FileDocument> fileDocuments = processor.loadDocumentsFromFolderRecursive(folderpath);
-
+    public void loadFolder(String folderpath) {
+        Collection<FileDocument> fileDocuments = processor.loadFolderRecursive(folderpath);
         for(FileDocument fileDocument : fileDocuments){
             index.populateIndex(fileDocument);
             this.documents.put(fileDocument, 0.0);
         }
-
         vectorLengthCalculated = false;
     }
 
@@ -53,38 +33,15 @@ public class Retriever implements Serializable{
         for(Resource document : documents.keySet()){
             documents.put(document, ranker.vectorLength(ranker.tfidf(document.getContent(),document,index)));
         }
-
         vectorLengthCalculated = true;
     }
 
 
-
-    public double tfidfSimilarity(Query query, FileDocument fileDocument){
-
-        RankingTool rtool = RankingTool.getInstance();
-        double score = 0.0;
-        for(String word : query.getWords()){
-            if(index.get(word) != null){
-                if(index.get(word).contains(fileDocument)){
-                    score += rtool.tfidf(word, fileDocument, index);
-                }
-            }
-        }
-
-        return score;
-    }
-
     public double cosineSimilarity(Query query, Resource document){
-
-        if(!vectorLengthCalculated){
-            generateLength();
-        }
-
+        if(!vectorLengthCalculated)
+                generateLength();
 
         RankingTool rtool = RankingTool.getInstance();
-        double score = 0.0;
-
-        double queryLength = rtool.vectorLength(rtool.termFrequency(query.getWords(), query));
         Vector<Double> queryVector = new Vector<>();
         Vector<Double> documentVector = new Vector<>();
 
@@ -97,31 +54,12 @@ public class Retriever implements Serializable{
             }
         }
 
-
-        queryVector = rtool.vectorNormalize(queryVector, queryLength);
+        queryVector = rtool.vectorNormalize(queryVector);
         documentVector = rtool.vectorNormalize(documentVector, documents.get(document));
 
-        score = rtool.vectorProduct(queryVector, documentVector);
-
-        return score;
+        return rtool.vectorProduct(queryVector, documentVector);
     }
 
-    public void saveData() throws IOException {
-        FileOutputStream stream = new FileOutputStream(indexFolderPath + "/docindex.index");
-        ObjectOutputStream writer = new ObjectOutputStream(stream);
-        writer.writeObject(this);
-        writer.close();
-        stream.close();
-    }
-
-    public static Retriever loadData(String folderpath) throws IOException, ClassNotFoundException {
-        FileInputStream stream = new FileInputStream(folderpath + "/docindex.index");
-        ObjectInputStream reader = new ObjectInputStream(stream);
-        Retriever ret =  (Retriever) reader.readObject();
-        reader.close();
-        stream.close();
-        return ret;
-    }
 
     public Set<Resource> getDocuments(){
         return documents.keySet();

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="cosine-similarity:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f6cc74b5-2b6e-4112-b79d-98192edc0da0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/document/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/document/FileDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/document/DocumentLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/document/DocumentLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/document/DocumentProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/document/DocumentProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/index/Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ranking/RankingTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ranking/RankingTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ranking/Retriever.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ranking/Retriever.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/FileUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +39,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>

@@ -2,6 +2,8 @@ package utils;
 import java.io.File;
 import java.util.Vector;
 
+
+
 public class FileUtils {
     public FileUtils(){}
 
@@ -16,9 +18,6 @@ public class FileUtils {
         return files;
     }
 
-    public File getFile(String filepath){
-        return new File(filepath);
-    }
 
     public String getFileType(String filename){
         String[] stringTokens = filename.split("\\.");
@@ -51,6 +50,10 @@ public class FileUtils {
         }
 
         return files;
+    }
+
+    public boolean isFile(File file){
+        return (file.exists() && file.isFile());
     }
 
     public Vector<File> getFolderFilesRecursive(String folderpath, String format){
