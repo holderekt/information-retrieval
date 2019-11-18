@@ -50,7 +50,7 @@ public class DocumentProcessor {
         System.out.println("Loading Files:");
         Vector<FileDocument> fileDocuments = new Vector<>();
         int n = files.size();
-        int i=0;
+        int i=1;
         for(File documentfile : files){
             FileDocument loadedFile = null;
             try {
@@ -77,9 +77,10 @@ public class DocumentProcessor {
         for(int i=0; i<=value; i++){
             System.out.print("#");
         }
-        for(int i=value; i<=23; i++){
+        for(int i=value; i<=24; i++){
             System.out.print(" ");
         }
-        System.out.print("]");
+
+        System.out.print("] "+ ((percentage * 100) / n) + "%");
     }
 }
