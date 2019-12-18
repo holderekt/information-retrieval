@@ -3,16 +3,21 @@ import index.*;
 import ranking.Pair;
 import ranking.Query;
 import ranking.Retriever;
+import utils.FileUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.Vector;
 
 public class  Main {
 
     public static void main(String[] args) throws NotValidDocumentException, IOException, ClassNotFoundException, DocumentException, InterruptedException {
+
+
         System.setProperty("org.apache.commons.logging.Log",
                 "org.apache.commons.logging.impl.NoOpLog");
 
@@ -47,10 +52,6 @@ public class  Main {
             }
 
         }while(!exit);
-
-
-
-
     }
 
 

@@ -64,7 +64,7 @@ public class FileUtils {
                 if(getFileType(file.getName()).equals(format)){
                     files.add(file);
                 }
-            }else{
+            }else if(file.isDirectory()){
                 Vector<File> temp = getFolderFilesRecursive(file.getAbsolutePath(), format);
                 files.addAll(temp);
             }
