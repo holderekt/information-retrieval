@@ -1,10 +1,10 @@
-# information-retrieval
+# Information Retrieval Algorithms 
 Information Retrieval Algorithms. Simple program made to
  test all the knowledge gathered during the course
  "Information Retrieval Methods".
-The main goal of this project is to index all fileDocuments
+The main goal of this project is to index all file, documents
 and books of my university courses and give the best result
-on a given query. The project is and will remain a **work in progress**.
+on a given query. The project is and will remain a **work in progress** that I will finish in my free time.
 
 The program indexes files using a **reverse index**,
  the words are weighted using **TF-IDF** (the query
